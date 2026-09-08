@@ -1,0 +1,52 @@
+{
+  "name": "tempus-fugit",
+  "version": "0.0.1",
+  "description": "Sed fugit interea, fugit irreparabile tempus",
+  "main": "src/js/app.js",
+  "postcss": {
+    "modules": false,
+    "parser": "sugarss",
+    "map": false,
+    "plugins": {
+      "cssnano": {},
+      "autoprefixer": {
+        "flexbox": "no-2009"
+      }
+    }
+  },
+  "browserslist": [
+    ">1%",
+    "last 2 versions",
+    "not ie < 9",
+    "not dead"
+  ],
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "mkdir -p .localserver && cp src/tempusfugit.jpg .localserver/tempusfugit.jpg && parcel src/index.html -d .localserver --https",
+    "build": "rm -rf dist && parcel build src/index.html --no-cache --no-source-maps --public-url ./ && cp src/tempusfugit.jpg dist/tempusfugit.jpg",
+    "build:extension": "npm run build && node build-extension.js",
+    "preview": "python3 -m http.server 4173 --directory dist",
+    "deploy:stage": "npm run build && surge dist tempusfugit.surge.sh",
+    "deploy:test": "npm run build && bash deploy.sh test",
+    "deploy:prod": "npm run build && bash deploy.sh sync"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alterebro/tempus-fugit.git"
+  },
+  "keywords": [],
+  "author": "Jorge Moreno, moro.es (@alterebro)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alterebro/tempus-fugit/issues"
+  },
+  "homepage": "https://github.com/alterebro/tempus-fugit#readme",
+  "devDependencies": {
+    "archiver": "^8.0.0",
+    "autoprefixer": "^9.6.0",
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-css-url-loader": "^1.0.5",
+    "sass": "^1.20.1"
+  }
+}

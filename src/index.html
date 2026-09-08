@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Tempus Fugit</title>
+    <meta name="description" content="Sed fugit interea, fugit irreparabile tempus" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="@alterebro" />
+    <meta name="google" content="notranslate" />
+    <meta name="theme-color" content="#111" />
+    <meta property="og:image" content="https://alterebro.com/tempusfugit/tempusfugit.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="800" />
+    <link rel="me" href="https://x.com/alterebro" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="canonical" href="https://alterebro.com/tempusfugit" />
+    <link rel="stylesheet" href="./css/app.scss" />
+</head>
+<body>
+
+    <nav role="navigation">
+        <a id="open-settings" title="Open Settings" href="#">&#x2261;</a>
+        <a id="close-settings" title="Close settings" href="#">&times;</a>
+    </nav>
+
+    <main role="main" id="data">
+        <div role="application" id="clock">
+            <div class="clock-counter">
+                <span id="tempus-years"><strong>&#45;</strong> <em>Years</em></span>
+                <span id="tempus-months"><strong>&#45;</strong> <em>Months</em></span>
+                <span id="tempus-days"><strong>&#45;</strong> <em>Days</em></span>
+                <span id="tempus-hours"><strong class="time">&#45;</strong> <em>Hours</em></span>
+                <span id="tempus-minutes"><strong class="time">&#45;</strong> <em>Minutes</em></span>
+                <span id="tempus-seconds"><strong class="time">&#45;</strong> <em>Seconds</em></span>
+            </div>
+            <div class="clock-info">
+                Time remaining to <strong id="tempus-death-string"></strong>, your last day alive.
+                <br />( <em>According to the WHO life expectancy data</em> )
+            </div>
+        </div>
+    </main>
+
+    <aside role="complementary" id="user-data">
+        <div role="form">
+
+            <div class="app-desc">
+                <h3>Tempus Fugit.</h3>
+                <p><em>"Sed fugit interea, fugit irreparabile tempus"</em></p>
+            </div>
+
+            <dl>
+                <dt><label for="user-dob">Birthdate</label></dt>
+                <dd><input id="user-dob" type="date" value="1987-01-01" min="1900-01-01" required="required" /></dd>
+
+                <dt class="gender">Gender</dt>
+                <dd class="gender">
+                    <label for="user-gender-male"><input name="user-gender" id="user-gender-male" type="radio" value="male" /> Male</label>
+                    <label for="user-gender-female"><input name="user-gender" id="user-gender-female" type="radio" value="female" /> Female</label>
+                </dd>
+
+                <dt><label for="user-country">Country</label></dt>
+                <dd><select id="user-country"></select></dd>
+            </dl>
+
+            <dl class="user-theme-switcher">
+                <dt>Style</dt>
+                <dd class="theme">
+                    <label for="user-theme-{style}"><input type="radio" name="user-theme" id="user-theme-{style}" value="{style}" /></label>
+                </dd>
+            </dl>
+
+            <p id="user-data-error"></p>
+            <p><button type="button" id="user-data-save">Save</button></p>
+        </div>
+    </aside>
+
+    <div id="loader"></div>
+
+
+    <script src="./js/app.js" charset="utf-8"></script>
+</body>
+</html>

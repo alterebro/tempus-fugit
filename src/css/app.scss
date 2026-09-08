@@ -1,0 +1,643 @@
+// --------------
+// Responsive Breakpoints
+$mobile-breakpoint  : 600;
+$desktop-breakpoint : 980;
+$mobile: "only screen and (max-width : #{$mobile-breakpoint}px)";
+$tablet: "only screen and (min-width : #{$mobile-breakpoint}px) and (max-width : #{$desktop-breakpoint}px)";
+
+$desktop-short : "only screen and (min-width : #{$desktop-breakpoint}px) and (max-height : 480px)";
+$desktop-midget : "only screen and (min-width : #{$desktop-breakpoint}px) and (max-height : 320px)";
+
+$desktop-spacing : 3rem;
+$tablet-spacing : 2rem;
+$mobile-spacing : 1rem;
+
+// --------------
+// Typography
+@font-face {
+    font-family: system;
+    font-style: normal;
+    font-weight: 300;
+    src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+@font-face {
+  font-family: 'Fira Sans Condensed';
+  font-style: normal;
+  font-weight: 100;
+  font-display: fallback;
+  src:
+    local('Fira Sans Condensed Thin'),
+    local('FiraSansCondensed-Thin'),
+    url(../fonts/fira-sans-condensed-thin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Fira Sans Condensed';
+  font-style: normal;
+  font-weight: 200;
+  font-display: fallback;
+  src:
+    local('Fira Sans Condensed ExtraLight'),
+    local('FiraSansCondensed-ExtraLight'),
+    url(../fonts/fira-sans-condensed-extralight.woff2) format('woff2');
+}
+
+$sans  : -apple-system, BlinkMacSystemFont, "system", "Segoe UI", "Roboto", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+$digit : "Fira Sans Condensed", $sans;
+
+// --------------
+// Vars
+$bg-color : #333;
+$fg-color : #fff;
+
+$fg-color-fade-m : rgba($fg-color, .5);
+
+$js-tooltip-bg : rgba(0, 0, 0, .5);
+$js-tooltip-fg : rgba(255, 255, 255, .9);
+$js-tooltip-arrow-size : 8px;
+
+// --------------
+// Global Style Reset
+%unspaced {
+    margin: 0;
+    padding: 0;
+}
+
+html, body, p, dl, dd, dt {
+    @extend %unspaced;
+}
+aside, main, nav {
+	display: block;
+    @extend %unspaced;
+}
+input, select, button {
+    font: inherit;
+	color: inherit;
+    @extend %unspaced;
+    text-transform: none;
+    max-width: 100%;
+}
+
+// --------------
+// Document
+html {
+    line-height: 1;
+	text-size-adjust: 100%;
+	box-sizing: border-box;
+	font-size: 62.5%;
+	word-break: break-word;
+}
+body {
+    font-family: $sans;
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 1.6;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+	background-repeat: no-repeat;
+}
+
+// ----------------------------
+// UI Elements :
+@mixin fixed-in-z($z) {
+    z-index: $z;
+    position: fixed;
+}
+@mixin transition-element($element) {
+    transition: $element .25s ease-in-out;
+}
+%circle-link {
+    display: block;
+    height: 3rem;
+    width: 3rem;
+    border-radius: .3rem;
+    text-indent: -1000rem;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, .1);
+    background-repeat: no-repeat;
+    background-position: center center;
+    @include transition-element(background-color);
+    &:hover { background-color: rgba(0, 0, 0, .5); }
+}
+%full-size {
+    width: 100%;
+    height: 100%;
+}
+
+// Tooltips
+@mixin tooltip-body {
+    background: $js-tooltip-bg;
+    color: $js-tooltip-fg;
+    border-radius: 3px;
+    padding: 10px 15px;
+    white-space: nowrap;
+    max-width: 32rem;
+    text-overflow: ellipsis;
+}
+@mixin tooltip-arrow {
+    content: '';
+    display: block;
+    position: absolute;
+    width: $js-tooltip-arrow-size*2;
+    height: $js-tooltip-arrow-size*2;
+    border: solid transparent $js-tooltip-arrow-size;
+}
+
+// --------------
+// Positioning
+html, body {
+    @extend %full-size;
+    overflow: hidden;
+}
+main[role="main"] {
+    position: absolute;
+    @extend %full-size;
+    z-index: 0;
+}
+nav[role="navigation"] {
+    @include fixed-in-z(3);
+    top: $desktop-spacing;
+    right: $desktop-spacing;
+}
+aside[role="complementary"]  {
+    @include fixed-in-z(2);
+    top: 0;
+    left: 0;
+    @extend %full-size;
+}
+// --------------
+// Aesthetics
+nav[role="navigation"] {
+    a {
+        background-size: 1rem 1rem;
+        @extend %circle-link;
+        @include transition-element(all);
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        pointer-events: none;
+        opacity: 0;
+
+        &.visible {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        &#open-settings { background-image: url(../img/menu-open.svg) }
+        &#close-settings { background-image: url(../img/menu-close.svg) }
+    }
+}
+
+main[role="main"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #clock {
+        position: relative;
+
+        div.clock-counter {
+            pointer-events: none;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+
+            span {
+                padding: 0 2rem;
+                position: relative;
+
+                strong, em {
+                    display: block;
+                    text-align: center;
+                    white-space: nowrap;
+                }
+                strong {
+                    font-family: $digit;
+                    font-weight: 500;
+                    font-size: 12rem;
+                    font-variant-numeric: tabular-nums;
+                    line-height: 1;
+                    margin: 0 0 .5rem 0;
+
+                    &.time { font-weight: 100 }
+                }
+                em {
+                    font-style: normal;
+                    font-size: 90%;
+                    color: $fg-color-fade-m;
+                    text-transform: uppercase;
+                    letter-spacing: .5rem;
+                }
+
+                &:after {
+                    content: '';
+                    display: block;
+                    height: .5rem;
+                    width: .5rem;
+                    border-radius: .5rem;
+                    background: $fg-color-fade-m;
+                    position: absolute;
+                    left: -2px;
+                    top: 50%;
+                    margin-top: -10px;
+                }
+            }
+
+            span:first-child {
+                &:after { display: none }
+            }
+            span:last-child {
+                strong { text-align: left }
+                width: 15rem;
+                overflow: visible;
+            }
+        }
+
+
+        div.clock-info {
+
+            @include tooltip-body;
+            @include transition-element(all);
+
+            position: absolute;
+            top: calc(100% + 32px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 38rem;
+            white-space: normal;
+            text-align: center;
+
+            opacity: 0;
+            pointer-events: none;
+            margin-top: 1rem;
+
+            &.visible {
+                opacity: 1;
+                margin-top: 0;
+            }
+
+            &:before {
+                @include tooltip-arrow;
+
+                border-bottom: solid $js-tooltip-bg $js-tooltip-arrow-size;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}
+
+aside[role="complementary"]  {
+
+    background: rgba(0, 0, 0, .65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    padding: 2rem;
+
+    pointer-events: none;
+    opacity: 0;
+    @include transition-element(opacity);
+
+    &.visible {
+        pointer-events: auto;
+        opacity: 1;
+        div[role="form"] { top: 0rem }
+    }
+
+    div[role="form"] {
+        @include transition-element(top);
+        position: relative;
+        top: 1rem;
+
+        margin: auto;
+        background: #fff;
+        color: $bg-color;
+        width: 100%;
+        max-width: 24rem;
+        padding: 3rem;
+        border-radius: 3px;
+        box-shadow: 0 10px 30px -5px rgba(0, 0, 0, .75);
+
+        .app-desc {
+            margin: 0 0 1.5rem;
+            padding: 0 0 0 1.5rem;
+            border-left: solid var(--base-color) 4px;
+
+            h3, p { 
+                margin: 0; 
+                font-style: italic; 
+                font-size: 100%;
+            }
+            p { color: var(--base-color); }
+        }
+
+        dt {
+            font-weight: 500;
+            padding: 0 0 .5rem;
+
+            &:before {
+                content: '\203A';
+                color: var(--base-color);
+                display: inline-block;
+                margin: 0 5px 0 0;
+                font-weight: bold;
+            }
+        }
+        dd { padding: 0 0 1.5rem }
+
+        input[type="date"],
+        select,
+        button {
+            display: block;
+            width: 100%;
+            border-radius: 3px;
+        }
+
+        input[type="date"],
+        select {
+            border: solid #ccc 1px;
+            background: #fff;
+            color: #777;
+            padding: .5rem 1rem;
+        	appearance: none;
+        	vertical-align: baseline;
+        	height: 3.2rem;
+        }
+
+        input[type="date"], select, button {
+            @include transition-element(all);
+            &:focus {
+                box-shadow: 0 0 1px 1px var(--base-color);
+                outline: none;
+            }
+        }
+
+        select {
+            background-image: url(../img/arrow-down.svg);
+            background-size: 8px 4px;
+            background-position: center right 10px;
+            background-repeat: no-repeat;
+        }
+
+        dd.gender {
+            label {
+                display: inline-block;
+                padding: 0 15px 0 0;
+                input[type="radio"] {
+                    display: inline-block;
+                    margin: 0 5px 0 0;
+                }
+            }
+        }
+
+        dd.theme {
+            overflow: auto;
+
+            label {
+                cursor: pointer;
+                width: 3rem;
+                height: 3rem;
+                border-radius: 100%;
+                background: rgba(0, 0, 0, .25);
+                float: left;
+                margin: 1px 6px 1px 1px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow:
+                    0 0 0 1px transparent,
+                    inset 0 0 0 0 #fff;
+                @include transition-element(box-shadow);
+
+                &:hover {
+                    box-shadow:
+                        0 0 0 1px var(--base-color),
+                        inset 0 0 0 2px #fff;
+                }
+
+                input {
+                    cursor: pointer;
+                    opacity: 0;
+                }
+            }
+
+            label:last-child { margin: 1px }
+        }
+
+        p#user-data-error {
+            margin: 0 .5rem 1.5rem;
+            color: #c00;
+
+            &:empty { margin: 0 }
+        }
+
+
+        button {
+            text-transform: uppercase;
+            letter-spacing: .3rem;
+            font-size: 80%;
+            font-weight: 700;
+            padding: 12px 20px;
+            border: none;
+            background: var(--base-color);
+            color: $fg-color;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                background: $bg-color;
+            }
+        }
+    }
+}
+
+body {
+
+    background-color: $bg-color;
+    color: $fg-color;
+    --base-color : #777;
+
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    &.intro {
+        > main > div, > nav { display: none; }
+        #user-data .user-theme-switcher { display: none }
+        #user-data .gender { display: none }
+    }
+    &.app {
+        #user-data .app-desc { display: none }
+    }
+
+    // --------------------------------------------
+    // Themes :
+    &.night {
+        --base-color : #444;
+        &:after {
+            background-color: #000;
+            background-image: linear-gradient(135deg, #333, #222);
+        }
+    }
+    &.forest {
+        background-color: #000;
+        --base-color: #597f00;
+        &:after {
+            opacity: .5;
+            background:
+                radial-gradient(circle at -15% 25%, #a9bf40, transparent), // ac8000
+                linear-gradient(225deg, #597f00 -5%, #00315a);
+        }
+    }
+    &.sunset {
+        --base-color : #ac3313;
+        &:after {
+            opacity: .8;
+            background-image: linear-gradient(135deg, #ac3313, #23074d);
+        }
+    }
+    &.ocean {
+        background-color: #000;
+        --base-color : #43C6AC;
+        &:after {
+            opacity: .8;
+            background-image: linear-gradient(135deg, #43C6AC, #191654);
+        }
+    }
+    &.sunrise {
+        background-color: #000;
+        --base-color : #f7b733;
+        &:after {
+            opacity: .75;
+            background-image: linear-gradient(135deg, #dc3a0a, #fc4a1a 35%, #f7b733);
+        }
+    }
+}
+
+aside[role="complementary"]  {
+    div[role="form"] {
+        dd.theme {
+            label[for="user-theme-night"] { background: linear-gradient(135deg, #333, #222); }
+            label[for="user-theme-forest"] { background: linear-gradient(135deg, #597f00, #22517a); }
+            label[for="user-theme-sunset"] { background: linear-gradient(135deg, #ac3313, #23074d); }
+            label[for="user-theme-ocean"] { background: linear-gradient(135deg, #43C6AC, #191654); }
+            label[for="user-theme-sunrise"] { background: linear-gradient(135deg, #fc4a1a, #f7b733); }
+        }
+    }
+}
+
+// --------------------------------------------
+// UI Responsiveness Layout
+
+@media #{$tablet} {
+
+    nav[role="navigation"] {
+        top: $tablet-spacing;
+        right: $tablet-spacing;
+    }
+    main[role="main"] {
+
+        #clock div.clock-counter {
+            span {
+                padding: 0 1.5rem;
+                strong { font-size: 7rem }
+                em {
+                    font-size: 80%;
+                    letter-spacing: .4rem;
+                }
+                &:after {
+                    height: .4rem;
+                    width: .4rem;
+                    border-radius: .4rem;
+                }
+            }
+            span:last-child { width: 9rem }
+        }
+    }
+}
+
+@media #{$mobile} {
+
+    nav[role="navigation"] {
+        top: $mobile-spacing;
+        right: $mobile-spacing;
+    }
+    main[role="main"] {
+
+        #clock div.clock-counter {
+
+            margin: 0 auto;
+            width: 30rem;
+            flex-wrap : wrap;
+            justify-content: space-between;
+
+            span {
+                background-color: rgba(0, 0, 0, .2);
+                border-radius: 3px;
+                padding: 2rem .8rem;
+                margin: .25rem 0;
+
+                strong, em { min-width: 8rem }
+                strong {
+                    font-size: 4.2rem;
+                    margin: 0;
+                }
+                em {
+                    font-size: 75%;
+                    letter-spacing: .3rem;
+                }
+                &:after { display: none }
+            }
+            span:last-child {
+                width: auto;
+                strong { text-align: center }
+            }
+        }
+    }
+
+}
+
+@media #{$desktop-short} {
+    main[role="main"] {
+        #clock div.clock-counter {
+            padding: 0 0 $desktop-spacing*1.5;
+        }
+    }
+}
+
+@media #{$desktop-midget} {
+    main[role="main"] {
+        #clock div.clock-counter {
+            padding: 0;
+        }
+    }
+}
+
+
+// --------------------------------------------
+// --------------------------------------------
+
+// Loader
+#loader {
+    @include fixed-in-z(100);
+    @extend %full-size;
+    @include transition-element(all);
+    background: #fff;
+    opacity: 1;
+
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+

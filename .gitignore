@@ -1,0 +1,8 @@
+.DS_Store
+.cache/
+.localserver/
+node_modules/
+dist/
+bin/
+data/
+build/

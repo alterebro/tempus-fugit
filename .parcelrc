@@ -1,0 +1,6 @@
+{
+  "css-url-loader": {
+    "exts": ["png", "svg", "jpg", "gif", "woff2", "woff2"],
+    "limit": 10240
+  }
+}
