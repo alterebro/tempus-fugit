@@ -6,3 +6,7 @@ dist/
 bin/
 data/
 build/
+deploy.sh
+.env*
+*.pem
+*.key

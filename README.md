@@ -6,10 +6,16 @@
 **Tempus Fugit ("It escapes, irretrievable time")**.
 <br>A new-tab extension that encourages productivity by showing an estimate of your remaining time in this world, based on WHO life-expectancy data. A quiet reminder of life’s finitude, designed to help you focus on what matters and make each day count.
 
+- Online Demo: [alterebro.com/tempusfugit](https://alterebro.com/tempusfugit)
+
 ![Tempus Fugit](src/tempusfugit.jpg "Tempus Fugit")
 
 
 ## Development
+
+```sh
+npm install
+```
 
 Watch files and start development server
 
@@ -31,26 +37,6 @@ Build fresh Chrome and Firefox extension archives. This command rebuilds the web
 
 ```sh
 npm run build:extension
-```
-
-## Deployment
-
-Deploy a fresh build to the Surge staging site:
-
-```sh
-npm run deploy:stage
-```
-
-Preview the DreamHost production changes without uploading them:
-
-```sh
-npm run deploy:test
-```
-
-Build and deploy the site to DreamHost:
-
-```sh
-npm run deploy:prod
 ```
 
 ---
