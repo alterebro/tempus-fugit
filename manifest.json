@@ -22,9 +22,6 @@
     "48": "icons/tempusfugit-48.png",
     "128": "icons/tempusfugit-128.png"
   },
-  "permissions": [
-    "storage"
-  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "tempus-fugit@alterebro.com",
