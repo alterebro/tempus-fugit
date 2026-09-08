@@ -29,22 +29,13 @@
                 }
             };
 
-            this.html = function (str) {
-                if (typeof str !== 'undefined') {
-                    this.els.forEach( (el) => { el.innerHTML = str });
-                    return this;
-                } else {
-                    return this.els[0].innerHTML;
-                }
-            };
-
             this.text = function(str) {
                 if (typeof str !== 'undefined') {
-                    this.els.forEach( (el) => { el.innerText = str });
+                    this.els.forEach( (el) => { el.textContent = str });
                     return this;
                 } else {
                     let _txt = "";
-                    this.els.forEach( (el) => { _txt += el.innerText });
+                    this.els.forEach( (el) => { _txt += el.textContent });
                     return _txt;
                 }
             };
@@ -62,7 +53,7 @@
             this.append = function (arg) {
                 if (arg instanceof muNodeCollection) { arg.els.forEach( (el) => { this.els[0].appendChild(el.cloneNode(true)) }); }
                 else if (arg instanceof HTMLElement) { this.els[0].appendChild(arg.cloneNode(true)); }
-                else if (typeof arg === "string") { this.els.forEach( (el) => { el.innerHTML += arg }); }
+                else if (typeof arg === "string") { this.els.forEach( (el) => { el.appendChild(document.createTextNode(arg)) }); }
                 return this;
             };
 

@@ -267,13 +267,13 @@ const Tempus = {
                     let _validate = Tempus.validateUserData();
                     if ( _validate ) {
 
-                        µ('#user-data-error').html('');
+                        µ('#user-data-error').text('');
                         Tempus.saveUserData(_validate)
                         Tempus.UI.view.app();
 
                     } else {
 
-                        µ('#user-data-error').html('<strong>!</strong> Please, complete this form!');
+                        µ('#user-data-error').text('! Please, complete this form!');
                     }
                 });
 
@@ -310,14 +310,14 @@ const Tempus = {
                     let _validate = Tempus.validateUserData();
                     if ( _validate ) {
 
-                        µ('#user-data-error').html('');
+                        µ('#user-data-error').text('');
                         Tempus.saveUserData(_validate)
                         Tempus.UI.settings.hide();
                         Tempus.UI.update();
 
                     } else {
 
-                        µ('#user-data-error').html('<strong>!</strong> Please, complete this form!');
+                        µ('#user-data-error').text('! Please, complete this form!');
                     }
                 });
 
@@ -352,19 +352,19 @@ const Tempus = {
             function updateDate() {
                 let _datestamp = Tempus.generateDatePoints();
 
-                µ('#tempus-years strong').html(_datestamp.years);
-                µ('#tempus-months strong').html(_datestamp.months);
-                µ('#tempus-days strong').html(_datestamp.days);
+                µ('#tempus-years strong').text(_datestamp.years);
+                µ('#tempus-months strong').text(_datestamp.months);
+                µ('#tempus-days strong').text(_datestamp.days);
 
-                µ('#tempus-death-string').html(_datestamp.death);
+                µ('#tempus-death-string').text(_datestamp.death);
             }
 
             function updateTime() {
                 let _timestamp = Tempus.generateTimePoints();
 
-                µ('#tempus-seconds strong').html(_timestamp.seconds);
-                µ('#tempus-minutes strong').html(_timestamp.minutes);
-                µ('#tempus-hours strong').html(_timestamp.hours);
+                µ('#tempus-seconds strong').text(_timestamp.seconds);
+                µ('#tempus-minutes strong').text(_timestamp.minutes);
+                µ('#tempus-hours strong').text(_timestamp.hours);
 
                 if ( parseFloat(_timestamp.seconds) <= 0) {
                     updateDate()
@@ -416,13 +416,22 @@ const Tempus = {
                 { name : 'sunrise' }
             ],
             render : function() {
-                let tplContainer = µ('#user-data .theme');
-                let tpl = tplContainer.html();
-                let output = [];
+                const tplContainer = document.querySelector('#user-data .theme');
+                tplContainer.replaceChildren();
+
                 Tempus.UI.theme.styles.forEach((el) => {
-                    output.push( tpl.replace(/{style}/gi, el.name).trim() );
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'user-theme';
+                    input.id = 'user-theme-' + el.name;
+                    input.value = el.name;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = input.id;
+                    label.appendChild(input);
+
+                    tplContainer.appendChild(label);
                 });
-                tplContainer.html( output.join('') );
             },
 
             set : function(theme, save = false) {

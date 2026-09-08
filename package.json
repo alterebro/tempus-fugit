@@ -33,7 +33,7 @@
   },
   "keywords": [],
   "author": "Jorge Moreno, moro.es (@alterebro)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alterebro/tempus-fugit/issues"
   },

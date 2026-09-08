@@ -11,16 +11,6 @@ const buildDir = path.join(rootDir, 'build');
 const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8'));
 const version = pkg.version;
 
-// Firefox-specific config
-const geckoBlock = {
-	browser_specific_settings: {
-		gecko: {
-            id: "tempus-fugit@alterebro.com",
-            strict_min_version: "109.0"
-        }
-	}
-};
-
 function cleanDir(dir) {
     if (fs.existsSync(dir)) fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir, { recursive: true });
@@ -64,9 +54,7 @@ function writeManifest(target, outDir) {
     const manifestPath = path.join(rootDir, 'manifest.json');
     const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
     manifest.version = version;
-    if (target === 'firefox') {
-        manifest.browser_specific_settings = geckoBlock.browser_specific_settings;
-    } else {
+    if (target !== 'firefox') {
         delete manifest.browser_specific_settings;
     }
     const manifestOutPath = path.join(outDir, 'manifest.json');
