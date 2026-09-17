@@ -6,6 +6,8 @@
 **Tempus Fugit ("It escapes, irretrievable time")**.
 <br>A new-tab extension that encourages productivity by showing an estimate of your remaining time in this world, based on WHO life-expectancy data. A quiet reminder of life’s finitude, designed to help you focus on what matters and make each day count.
 
+- **Chrome**: [chromewebstore.google.com/detail/tempus-fugit/mamchnchoiecc...](https://chromewebstore.google.com/detail/tempus-fugit/mamchnchoieccjbbhafialaeobjckohi)
+- **Firefox**: [addons.mozilla.org/addon/tempus-fugit-new-tab](https://addons.mozilla.org/addon/tempus-fugit-new-tab/)
 - Online Demo: [alterebro.com/tempusfugit](https://alterebro.com/tempusfugit)
 
 ![Tempus Fugit](src/tempusfugit.jpg "Tempus Fugit")
